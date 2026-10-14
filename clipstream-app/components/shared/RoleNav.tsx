@@ -24,7 +24,7 @@ export default function RoleNav({
         <div className={styles.actions}>
           <span className={styles.roleBadge}>{role === "clipper" ? "Clipper workspace" : "Brand workspace"}</span>
           <Link href={otherRoleHref} className={styles.switchRole}>{otherRoleLabel}</Link>
-          <Link href="/" className={styles.homeAction}>← Homepage</Link>
+          <Link href="/admin" className={styles.switchRole}>Admin</Link><Link href="/" className={styles.homeAction}>← Homepage</Link>
         </div>
       </div>
 
