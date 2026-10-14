@@ -11,6 +11,7 @@ import {
   type Campaign,
   type CampaignClip,
   type ClipEarnings,
+  type ClipPlatform,
 } from "@/lib/api";
 import { formatUsdc, formatRatePerThousand } from "@/lib/format";
 import { useClipperWallet } from "@/lib/useClipperWallet";
@@ -42,7 +43,8 @@ export default function ClipperCampaignPage() {
   const [secondsAgo, setSecondsAgo] = useState(0);
   const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
 
-  const [tweetUrl, setTweetUrl] = useState("");
+  const [clipUrl, setClipUrl] = useState("");
+  const [platform, setPlatform] = useState<ClipPlatform>("tiktok");
   const [submitState, setSubmitState] = useState<"idle" | "submitting" | "error" | "success">("idle");
   const [submitMessage, setSubmitMessage] = useState<string | null>(null);
 
@@ -123,18 +125,19 @@ export default function ClipperCampaignPage() {
 
   async function handleSubmitClip(e: FormEvent) {
     e.preventDefault();
-    if (!tweetUrl.trim() || !activeWallet) return;
+    if (!clipUrl.trim() || !activeWallet) return;
     setSubmitState("submitting");
     setSubmitMessage(null);
     try {
       const result = await submitClip({
         campaign_id: Number(campaignId),
         clipper_wallet: activeWallet,
-        url: tweetUrl.trim(),
+        url: clipUrl.trim(),
+        platform,
       });
       setSubmitState("success");
       setSubmitMessage(`Clip submitted — ${result.ownership}`);
-      setTweetUrl("");
+      setClipUrl("");
       loadClips();
     } catch (err) {
       setSubmitState("error");
@@ -193,16 +196,50 @@ export default function ClipperCampaignPage() {
           ) : (
             <>
               <form onSubmit={handleSubmitClip} className={styles.submitForm}>
-                <input
-                  type="text"
-                  placeholder="https://www.tiktok.com/@creator/video/…"
-                  value={tweetUrl}
-                  onChange={(e) => setTweetUrl(e.target.value)}
-                  className={styles.input}
-                />
-                <button type="submit" className="btn" disabled={submitState === "submitting"}>
-                  {submitState === "submitting" ? "Submitting…" : "Submit"}
-                </button>
+                <div className={styles.platformPicker} role="group" aria-label="Choose clip platform">
+                  {([
+                    ["tiktok", "TikTok", "Short-form vertical video"],
+                    ["youtube", "YouTube Shorts", "Shorts URL"],
+                    ["reels", "Instagram Reels", "Reel URL"],
+                  ] as const).map(([value, label, hint]) => (
+                    <button
+                      key={value}
+                      type="button"
+                      className={platform === value ? styles.platformActive : styles.platformOption}
+                      onClick={() => setPlatform(value)}
+                    >
+                      <span className={styles.platformIcon}>
+                        {value === "tiktok" ? "♪" : value === "youtube" ? "▶" : "◎"}
+                      </span>
+                      <span>
+                        <strong>{label}</strong>
+                        <small>{hint}</small>
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                <div className={styles.urlRow}>
+                  <input
+                    type="url"
+                    placeholder={
+                      platform === "tiktok"
+                        ? "https://www.tiktok.com/@creator/video/..."
+                        : platform === "youtube"
+                          ? "https://www.youtube.com/shorts/..."
+                          : "https://www.instagram.com/reel/..."
+                    }
+                    value={clipUrl}
+                    onChange={(e) => setClipUrl(e.target.value)}
+                    className={styles.input}
+                    required
+                  />
+                  <button type="submit" className={styles.submitBtn} disabled={submitState === "submitting"}>
+                    {submitState === "submitting" ? "Submitting…" : "Submit clip"}
+                  </button>
+                </div>
+                <p className={styles.submitHint}>
+                  Select the platform first. The demo validates that the submitted URL matches TikTok, YouTube Shorts, or Instagram Reels.
+                </p>
               </form>
               {submitMessage && (
                 <div className={submitState === "error" ? styles.errorBanner : styles.successBanner}>
@@ -252,7 +289,10 @@ export default function ClipperCampaignPage() {
                 return (
                   <div key={clip.id} className={styles.clipRow}>
                     <div className={styles.clipInfo}>
-                      <div className={styles.clipName}>Clip #{clip.id}</div>
+                      <div className={styles.clipName}>
+                        <span className={styles.platformBadge}>{clip.platform === "youtube" ? "YouTube Shorts" : clip.platform === "reels" ? "Instagram Reels" : "TikTok"}</span>
+                        Clip #{clip.id}
+                      </div>
                       <div className={styles.clipUrl}>{clip.url}</div>
                     </div>
                     <div className={styles.clipStat}>
