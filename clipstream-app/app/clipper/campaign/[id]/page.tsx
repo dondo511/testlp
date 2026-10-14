@@ -195,7 +195,7 @@ export default function ClipperCampaignPage() {
               <form onSubmit={handleSubmitClip} className={styles.submitForm}>
                 <input
                   type="text"
-                  placeholder="https://x.com/handle/status/…"
+                  placeholder="https://www.tiktok.com/@creator/video/…"
                   value={tweetUrl}
                   onChange={(e) => setTweetUrl(e.target.value)}
                   className={styles.input}
@@ -241,7 +241,7 @@ export default function ClipperCampaignPage() {
             <div className={styles.emptyState}>
               <div className={styles.emptyTitle}>No clips submitted yet</div>
               <p className={styles.emptyDesc}>
-                Submit your first tweet above — once it&rsquo;s live, views start counting and payouts begin.
+                Submit your first clip above — once it passes demo review, verified views start counting toward earnings.
               </p>
             </div>
           ) : (
