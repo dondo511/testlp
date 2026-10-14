@@ -54,7 +54,7 @@ export default function TopUpForm({
           onChange={(e) => setAmount(e.target.value)}
           disabled={submitting}
           inputMode="decimal"
-          placeholder="$ USDC"
+          placeholder="$ demo funds"
         />
         <button type="submit" className={`btn ${styles.submitBtn}`} disabled={submitting}>
           {submitting ? status || "Working…" : "Top up"}
@@ -65,12 +65,12 @@ export default function TopUpForm({
         <div className={styles.success}>
           Funded —{" "}
           <a
-            href={`https://testnet.arcscan.app/tx/${result}`}
+            href="#"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.successLink}
           >
-            view transaction ↗
+            demo funding recorded
           </a>
         </div>
       )}
