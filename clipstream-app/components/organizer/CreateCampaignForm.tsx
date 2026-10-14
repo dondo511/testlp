@@ -96,7 +96,7 @@ export default function CreateCampaignForm({
             value={name}
             onChange={(e) => setName(e.target.value)}
             disabled={submitting}
-            placeholder="e.g. Clips for Ishowspeed"
+            placeholder="e.g. Derby reaction clips"
             required
           />
         </label>
@@ -131,7 +131,7 @@ export default function CreateCampaignForm({
           />
         </label>
         <label className={styles.field}>
-          <span className={styles.label}>Initial deposit ($ USDC)</span>
+          <span className={styles.label}>Initial campaign pool ($)</span>
           <input
             className={styles.input}
             value={depositAmount}
@@ -171,12 +171,12 @@ export default function CreateCampaignForm({
         <div className={styles.success}>
           Campaign #{result.campaignId} created —{" "}
           <a
-            href={`https://testnet.arcscan.app/tx/${result.txHash}`}
+            href="#"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.successLink}
           >
-            view transaction ↗
+            demo campaign created
           </a>
         </div>
       )}
