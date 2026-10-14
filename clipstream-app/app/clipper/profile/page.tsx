@@ -183,7 +183,7 @@ export default function ClipperProfilePage() {
               ) : (
                 <div className={styles.xPrompt}>
                   <p className={styles.xPromptText}>
-                    Link your X account to submit clips — ownership is verified against your tweets before any
+                    Link your social account to submit clips — ownership should be verified before any
                     clip is accepted.
                   </p>
                   <a
@@ -274,7 +274,7 @@ export default function ClipperProfilePage() {
                 <div className={styles.emptyState}>
                   <div className={styles.emptyTitle}>No payouts yet</div>
                   <p className={styles.emptyDesc}>
-                    Payouts appear here the moment a settlement lands on-chain — each links to a real Arc
+                    Payouts appear here as verified view deltas are settled from the campaign pool. The production version can attach
                     Testnet transaction.
                   </p>
                 </div>
@@ -316,7 +316,7 @@ export default function ClipperProfilePage() {
               <div className={styles.settingsRow}>
                 <div className={styles.settingsLabel}>Wallet type</div>
                 <div className={styles.settingsValue}>
-                  {isDevPreview ? "Preview (dev override)" : "Circle-managed (Arc Testnet)"}
+                  {isDevPreview ? "Preview (dev override)" : "Verified demo payout account"}
                 </div>
               </div>
               {circleWallet && !isDevPreview && (
@@ -330,7 +330,7 @@ export default function ClipperProfilePage() {
                       setCircleWallet(null);
                     }}
                   >
-                    Forget this wallet on this device
+                    Reset this demo account
                   </button>
                 </div>
               )}
