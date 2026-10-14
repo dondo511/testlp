@@ -8,10 +8,12 @@ type Campaign = {
   runway_percent:number|null; clip_count:number; spend_velocity_last_hour:string;
 };
 type ClipPlatform = "tiktok" | "youtube" | "reels";
+type ClipReviewStatus = "approved" | "pending" | "rejected";
 type Clip = {
   id:number; campaign_id:number; clipper_wallet:string; url:string; platform:ClipPlatform; tweet_id:string;
   per_clip_cap:string|null; is_capped:boolean; effective_cpm_rate:string|null;
   submitted_at:string; current_view_count:number|null; last_polled_at:string|null; total_earnings:string;
+  review_status:ClipReviewStatus;
 };
 type Settlement = {
   id:number; campaign_id:number; clip_id:number; view_delta:number; amount:string;
@@ -31,11 +33,11 @@ const seed:DemoState={
   {id:103,name:"Responsible Play Explainer",contract_campaign_id:"10301",organizer_wallet:"demo_novabet",cpm_rate:"4800000",max_cpm:"5500000",max_duration:2592000,status:"active",description:"Educational clips covering bankroll limits, timeout tools and safer-play controls. No bonus claims or inducement framing.",source_link:"https://example.com/responsible-play-kit",created_at:"2026-10-11T09:00:00.000Z",remaining_balance:"1460000000",total_settled:"340000000",total_budget:"1800000000",runway_percent:81.11,clip_count:11,spend_velocity_last_hour:"24000000"}
  ],
  clips:[
-  {id:501,campaign_id:101,clipper_wallet:"demo_goalframe",url:"https://tiktok.com/@goalframe/video/demo1",platform:"tiktok",tweet_id:"tt501",per_clip_cap:"650000000",is_capped:false,effective_cpm_rate:"5400000",submitted_at:"2026-10-12T09:30:00.000Z",current_view_count:84200,last_polled_at:now,total_earnings:"391820000"},
-  {id:502,campaign_id:101,clipper_wallet:"demo_matchpulse",url:"https://instagram.com/reel/demo2",platform:"reels",tweet_id:"ig502",per_clip_cap:"500000000",is_capped:false,effective_cpm_rate:"4500000",submitted_at:"2026-10-12T10:10:00.000Z",current_view_count:61200,last_polled_at:now,total_earnings:"265120000"},
-  {id:503,campaign_id:102,clipper_wallet:"demo_goalframe",url:"https://youtube.com/shorts/demo3",platform:"youtube",tweet_id:"yt503",per_clip_cap:"420000000",is_capped:false,effective_cpm_rate:"4100000",submitted_at:"2026-10-13T08:00:00.000Z",current_view_count:47600,last_polled_at:now,total_earnings:"184360000"},
-  {id:504,campaign_id:102,clipper_wallet:"demo_footballcutmy",url:"https://tiktok.com/@footballcutmy/video/demo4",platform:"tiktok",tweet_id:"tt504",per_clip_cap:"350000000",is_capped:false,effective_cpm_rate:"3400000",submitted_at:"2026-10-13T11:00:00.000Z",current_view_count:32300,last_polled_at:now,total_earnings:"108640000"},
-  {id:505,campaign_id:103,clipper_wallet:"demo_sportbrief",url:"https://tiktok.com/@sportbrief/video/demo5",platform:"tiktok",tweet_id:"tt505",per_clip_cap:"250000000",is_capped:false,effective_cpm_rate:"5100000",submitted_at:"2026-10-13T12:00:00.000Z",current_view_count:17100,last_polled_at:now,total_earnings:"83140000"}
+  {id:501,campaign_id:101,clipper_wallet:"demo_goalframe",url:"https://tiktok.com/@goalframe/video/demo1",platform:"tiktok",tweet_id:"tt501",per_clip_cap:"650000000",is_capped:false,effective_cpm_rate:"5400000",submitted_at:"2026-10-12T09:30:00.000Z",current_view_count:84200,last_polled_at:now,total_earnings:"391820000",review_status:"approved"},
+  {id:502,campaign_id:101,clipper_wallet:"demo_matchpulse",url:"https://instagram.com/reel/demo2",platform:"reels",tweet_id:"ig502",per_clip_cap:"500000000",is_capped:false,effective_cpm_rate:"4500000",submitted_at:"2026-10-12T10:10:00.000Z",current_view_count:61200,last_polled_at:now,total_earnings:"265120000",review_status:"approved"},
+  {id:503,campaign_id:102,clipper_wallet:"demo_goalframe",url:"https://youtube.com/shorts/demo3",platform:"youtube",tweet_id:"yt503",per_clip_cap:"420000000",is_capped:false,effective_cpm_rate:"4100000",submitted_at:"2026-10-13T08:00:00.000Z",current_view_count:47600,last_polled_at:now,total_earnings:"184360000",review_status:"approved"},
+  {id:504,campaign_id:102,clipper_wallet:"demo_footballcutmy",url:"https://tiktok.com/@footballcutmy/video/demo4",platform:"tiktok",tweet_id:"tt504",per_clip_cap:"350000000",is_capped:false,effective_cpm_rate:"3400000",submitted_at:"2026-10-13T11:00:00.000Z",current_view_count:32300,last_polled_at:now,total_earnings:"108640000",review_status:"pending"},
+  {id:505,campaign_id:103,clipper_wallet:"demo_sportbrief",url:"https://tiktok.com/@sportbrief/video/demo5",platform:"tiktok",tweet_id:"tt505",per_clip_cap:"250000000",is_capped:false,effective_cpm_rate:"5100000",submitted_at:"2026-10-13T12:00:00.000Z",current_view_count:17100,last_polled_at:now,total_earnings:"83140000",review_status:"approved"}
  ],
  settlements:[
   {id:9001,campaign_id:101,clip_id:501,view_delta:4900,amount:"26460000",settlement_id:"demo_settlement_9001",tx_hash:"demo_tx_91a7",tx_url:null,created_at:"2026-10-14T05:32:00.000Z"},
@@ -59,6 +61,39 @@ export async function GET(req:NextRequest,{params}:{params:Promise<{path:string[
  const p=(await params).path||[];
  if(p[0]==="auth" && p[1]==="x" && p[2]==="start"){
    return NextResponse.redirect(new URL("/clipper/profile?linked_handle=goalframe",req.url));
+ }
+ if(p[0]==="admin" && p[1]==="overview"){
+   const campaigns=db().campaigns;
+   const clips=db().clips;
+   const wallets=[...new Set(clips.map(c=>c.clipper_wallet))];
+   const totalViews=clips.reduce((a,c)=>a+(c.current_view_count||0),0);
+   const totalPaid=db().settlements.reduce((a,s)=>a+BigInt(s.amount),0n).toString();
+   return json({
+     stats:{
+       active_campaigns:campaigns.filter(c=>c.status==="active").length,
+       total_campaigns:campaigns.length,
+       total_clips:clips.length,
+       pending_reviews:clips.filter(c=>c.review_status==="pending").length,
+       approved_clips:clips.filter(c=>c.review_status==="approved").length,
+       total_clippers:wallets.length,
+       total_views:totalViews,
+       total_paid:totalPaid
+     },
+     campaigns,
+     clips,
+     settlements:db().settlements.slice().reverse(),
+     creators:wallets.map(wallet=>{
+       const rows=clips.filter(c=>c.clipper_wallet===wallet);
+       return {
+         wallet,
+         clips:rows.length,
+         approved:rows.filter(c=>c.review_status==="approved").length,
+         pending:rows.filter(c=>c.review_status==="pending").length,
+         views:rows.reduce((a,c)=>a+(c.current_view_count||0),0),
+         earnings:rows.reduce((a,c)=>a+BigInt(c.total_earnings),0n).toString()
+       };
+     }).sort((a,b)=>b.views-a.views)
+   });
  }
  if(p[0]==="campaigns" && p.length===1) return json({campaigns:db().campaigns});
  if(p[0]==="campaigns" && p.length===2){
@@ -104,6 +139,22 @@ export async function GET(req:NextRequest,{params}:{params:Promise<{path:string[
 
 export async function POST(req:NextRequest,{params}:{params:Promise<{path:string[]}>}){
  const p=(await params).path||[]; const body=await req.json().catch(()=>({}));
+ if(p[0]==="admin" && p[1]==="clips" && p[3]==="review"){
+   const id=Number(p[2]); const clip=db().clips.find(c=>c.id===id);
+   if(!clip) return json({error:"Clip not found"},404);
+   const status=String(body.status||"") as ClipReviewStatus;
+   if(!["approved","pending","rejected"].includes(status)) return json({error:"Invalid review status"},400);
+   clip.review_status=status;
+   return json({clip});
+ }
+ if(p[0]==="admin" && p[1]==="campaigns" && p[3]==="status"){
+   const id=Number(p[2]); const campaign=db().campaigns.find(c=>c.id===id);
+   if(!campaign) return json({error:"Campaign not found"},404);
+   const status=String(body.status||"");
+   if(!["active","paused","closed"].includes(status)) return json({error:"Invalid campaign status"},400);
+   campaign.status=status;
+   return json({campaign});
+ }
  if(p[0]==="clips" && p.length===1){
    const id=Math.max(...db().clips.map(c=>c.id))+1;
    const c=campaignById(Number(body.campaign_id)); if(!c) return json({error:"Campaign not found"},404);
@@ -118,7 +169,7 @@ export async function POST(req:NextRequest,{params}:{params:Promise<{path:string
      platform==="youtube" ? (host.endsWith("youtube.com") || host==="youtu.be") :
      (host.endsWith("instagram.com"));
    if(!valid) return json({error:"The URL does not match the selected platform"},400);
-   db().clips.unshift({id,campaign_id:Number(body.campaign_id),clipper_wallet:String(body.clipper_wallet||"demo_goalframe"),url,platform,tweet_id:"demo_"+id,per_clip_cap:"400000000",is_capped:false,effective_cpm_rate:null,submitted_at:new Date().toISOString(),current_view_count:1000,last_polled_at:new Date().toISOString(),total_earnings:"0"});
+   db().clips.unshift({id,campaign_id:Number(body.campaign_id),clipper_wallet:String(body.clipper_wallet||"demo_goalframe"),url,platform,tweet_id:"demo_"+id,per_clip_cap:"400000000",is_capped:false,effective_cpm_rate:null,submitted_at:new Date().toISOString(),current_view_count:1000,last_polled_at:new Date().toISOString(),total_earnings:"0",review_status:"pending"});
    c.clip_count+=1;
    return json({clip:{id,platform},ownership:"demo social ownership verified"});
  }
