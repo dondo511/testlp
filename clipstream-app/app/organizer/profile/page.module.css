@@ -1,9 +1,9 @@
 .page {
   min-height: 100vh;
-  background: #f5f4f1;
+  background: var(--paper);
 }
 .wrap {
-  max-width: 900px;
+  max-width: 1120px;
   margin: 0 auto;
   padding: 32px 24px 96px;
 }
@@ -14,8 +14,8 @@
 .title {
   font-family: var(--font-display), serif;
   font-weight: 400;
-  font-size: 30px;
-  color: #0a0a0a;
+  font-size: 34px;
+  color: var(--ink);
   margin: 0 0 6px;
 }
 .walletSubtitle {
@@ -25,16 +25,16 @@
 }
 
 .card {
-  background: #fff;
-  border: 1px solid rgba(10, 10, 10, 0.1);
-  border-radius: 20px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 22px;
   padding: 28px;
   margin-bottom: 20px;
 }
 .cardTitle {
   font-size: 17px;
   font-weight: 700;
-  color: #0a0a0a;
+  color: var(--ink);
   margin: 0 0 16px;
 }
 
@@ -68,8 +68,8 @@
 
 /* --- aggregate spend ticker --- */
 .tickerCard {
-  background: #0a0a0a;
-  border-radius: 20px;
+  background: var(--ink);
+  border-radius: 22px;
   padding: 32px;
   margin-bottom: 20px;
 }
@@ -128,7 +128,7 @@
 .newCampaignBtn {
   width: 100%;
   padding: 16px;
-  border-radius: 20px;
+  border-radius: 22px;
   border: 1px dashed rgba(10, 10, 10, 0.25);
   background: transparent;
   color: rgba(10, 10, 10, 0.6);
@@ -139,7 +139,7 @@
 }
 .newCampaignBtn:hover {
   border-color: rgba(10, 10, 10, 0.4);
-  color: #0a0a0a;
+  color: var(--ink);
 }
 
 /* --- empty state --- */
@@ -199,7 +199,7 @@
 .campaignName {
   font-size: 13.5px;
   font-weight: 600;
-  color: #0a0a0a;
+  color: var(--ink);
 }
 .pillActive,
 .pillClosed {
@@ -229,7 +229,7 @@
   font-family: var(--font-mono), monospace;
   font-size: 13.5px;
   font-weight: 600;
-  color: #0a0a0a;
+  color: var(--ink);
 }
 .campaignArrow {
   text-align: right;
