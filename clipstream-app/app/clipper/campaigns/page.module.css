@@ -1,9 +1,9 @@
 .page {
   min-height: 100vh;
-  background: #f5f4f1;
+  background: var(--paper);
 }
 .wrap {
-  max-width: 900px;
+  max-width: 1120px;
   margin: 0 auto;
   padding: 32px 24px 96px;
 }
@@ -14,8 +14,8 @@
 .title {
   font-family: var(--font-display), serif;
   font-weight: 400;
-  font-size: 30px;
-  color: #0a0a0a;
+  font-size: 34px;
+  color: var(--ink);
   margin: 0 0 6px;
 }
 .subtitle {
@@ -24,9 +24,9 @@
 }
 
 .card {
-  background: #fff;
-  border: 1px solid rgba(10, 10, 10, 0.1);
-  border-radius: 20px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 22px;
   padding: 28px;
 }
 
@@ -106,7 +106,7 @@
 .campaignName {
   font-size: 13.5px;
   font-weight: 600;
-  color: #0a0a0a;
+  color: var(--ink);
 }
 .pillActive {
   display: inline-block;
@@ -140,7 +140,7 @@
   font-family: var(--font-mono), monospace;
   font-size: 13.5px;
   font-weight: 600;
-  color: #0a0a0a;
+  color: var(--ink);
 }
 .campaignArrow {
   text-align: right;
