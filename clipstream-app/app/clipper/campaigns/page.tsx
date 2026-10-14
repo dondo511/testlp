@@ -50,7 +50,7 @@ export default function ClipperCampaignsPage() {
 
         <header className={styles.header}>
           <h1 className={styles.title}>Open campaigns</h1>
-          <p className={styles.subtitle}>Pick one and submit a tweet URL to start earning per view.</p>
+          <p className={styles.subtitle}>Pick a licensed campaign and submit a public clip URL to start earning from verified views.</p>
         </header>
 
         <section className={styles.card}>
