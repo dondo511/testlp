@@ -31,11 +31,14 @@ export interface Campaign {
   spend_velocity_last_hour: string;
 }
 
+export type ClipPlatform = "tiktok" | "youtube" | "reels";
+
 export interface CampaignClip {
   id: number;
   campaign_id: number;
   clipper_wallet: string;
   url: string;
+  platform: ClipPlatform;
   tweet_id: string;
   per_clip_cap: string | null;
   is_capped: boolean;
@@ -172,7 +175,7 @@ export async function fetchAgentDecisions(campaignId: string, limit: number): Pr
     throw new Error(await readErrorMessage(res, `Failed to load agent decisions (${res.status})`));
   }
   const data = await res.json();
-  return data.agent_decisions;
+  return data.agent_decisions ?? data.decisions ?? [];
 }
 
 export async function fetchClipEarnings(clipId: number): Promise<ClipEarnings> {
@@ -233,7 +236,8 @@ export async function submitClip(input: {
   campaign_id: number;
   clipper_wallet: string;
   url: string;
-}): Promise<{ clip: { id: number }; ownership: string }> {
+  platform: ClipPlatform;
+}): Promise<{ clip: { id: number; platform: ClipPlatform }; ownership: string }> {
   const res = await fetch(`${API_BASE}/clips`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
