@@ -1,9 +1,9 @@
 .page {
   min-height: 100vh;
-  background: #f5f4f1;
+  background: var(--paper);
 }
 .wrap {
-  max-width: 900px;
+  max-width: 1120px;
   margin: 0 auto;
   padding: 32px 24px 96px;
 }
@@ -14,8 +14,8 @@
 .title {
   font-family: var(--font-display), serif;
   font-weight: 400;
-  font-size: 30px;
-  color: #0a0a0a;
+  font-size: 34px;
+  color: var(--ink);
   margin: 0 0 16px;
 }
 .titleId {
@@ -46,7 +46,7 @@
   font-family: var(--font-mono), monospace;
   font-size: 18px;
   font-weight: 600;
-  color: #0a0a0a;
+  color: var(--ink);
 }
 .muted {
   color: rgba(10, 10, 10, 0.4);
@@ -88,16 +88,16 @@
 }
 
 .card {
-  background: #fff;
-  border: 1px solid rgba(10, 10, 10, 0.1);
-  border-radius: 20px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 22px;
   padding: 28px;
   margin-bottom: 20px;
 }
 .cardTitle {
   font-size: 17px;
   font-weight: 700;
-  color: #0a0a0a;
+  color: var(--ink);
   margin: 0 0 16px;
 }
 
@@ -137,8 +137,8 @@
 }
 
 .tickerCard {
-  background: #0a0a0a;
-  border-radius: 20px;
+  background: var(--ink);
+  border-radius: 22px;
   padding: 32px;
   margin-bottom: 20px;
 }
@@ -249,7 +249,7 @@
 .clipName {
   font-size: 13.5px;
   font-weight: 600;
-  color: #0a0a0a;
+  color: var(--ink);
 }
 .clipUrl {
   font-family: var(--font-mono), monospace;
@@ -269,7 +269,7 @@
   font-family: var(--font-mono), monospace;
   font-size: 14px;
   font-weight: 600;
-  color: #0a0a0a;
+  color: var(--ink);
 }
 .clipValueAccent {
   font-family: var(--font-mono), monospace;
