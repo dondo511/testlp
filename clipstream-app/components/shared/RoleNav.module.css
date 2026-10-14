@@ -1,8 +1,8 @@
 .nav {
   display: flex;
   gap: 4px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid rgba(10, 10, 10, 0.1);
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--line);
 }
 .tab,
 .tabActive {
@@ -16,12 +16,12 @@
   transition: color 0.15s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .tab {
-  color: rgba(10, 10, 10, 0.45);
+  color: var(--muted);
 }
 .tab:hover {
   color: rgba(10, 10, 10, 0.75);
 }
 .tabActive {
-  color: #0a0a0a;
-  border-bottom-color: var(--accent);
+  color: var(--ink);
+  border-bottom-color: var(--ink);
 }
