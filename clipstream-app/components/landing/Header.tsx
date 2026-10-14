@@ -13,7 +13,7 @@ export default function Header(){
           <div className={styles.navLinks}>
             <a href="#unique-features" className={styles.link}>Features</a>
             <a href="#how-it-works" className={styles.link}>How it works</a>
-            <Link href="/clipper/campaigns" className={styles.link}>Campaigns</Link>
+            <Link href="/clipper/campaigns" className={styles.link}>Campaigns</Link><Link href="/admin" className={styles.link}>Admin</Link>
           </div>
           <a href="#choose-path" className={styles.cta}>Open prototype</a>
         </nav>
