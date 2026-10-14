@@ -1,15 +1,15 @@
 .page {
   min-height: 100vh;
-  background: #f5f4f1;
+  background: var(--paper);
 }
 .wrap {
-  max-width: 900px;
+  max-width: 1120px;
   margin: 0 auto;
   padding: 32px 24px 96px;
 }
 
 .scopeBanner {
-  background: #fff;
+  background: var(--card);
   border: 1px dashed rgba(10, 10, 10, 0.25);
   border-radius: 8px;
   padding: 14px 16px;
@@ -19,7 +19,7 @@
   line-height: 1.5;
 }
 .scopeBanner strong {
-  color: #0a0a0a;
+  color: var(--ink);
 }
 
 .header {
@@ -28,8 +28,8 @@
 .title {
   font-family: var(--font-display), serif;
   font-weight: 400;
-  font-size: 30px;
-  color: #0a0a0a;
+  font-size: 34px;
+  color: var(--ink);
   margin: 0 0 20px;
 }
 .titleId {
@@ -71,9 +71,9 @@
 }
 
 .poolCard {
-  background: #fff;
-  border: 1px solid rgba(10, 10, 10, 0.1);
-  border-radius: 20px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 22px;
   padding: 24px 28px;
   margin-bottom: 16px;
 }
@@ -115,7 +115,7 @@
   justify-content: space-between;
   font-family: var(--font-mono), monospace;
   font-size: 13px;
-  color: #0a0a0a;
+  color: var(--ink);
   flex-wrap: wrap;
   gap: 6px;
 }
@@ -138,8 +138,8 @@
   flex-wrap: wrap;
 }
 .stat {
-  background: #fff;
-  border: 1px solid rgba(10, 10, 10, 0.1);
+  background: var(--card);
+  border: 1px solid var(--line);
   border-radius: 14px;
   padding: 16px 20px;
   min-width: 140px;
@@ -157,20 +157,20 @@
   font-family: var(--font-mono), monospace;
   font-size: 16px;
   font-weight: 600;
-  color: #0a0a0a;
+  color: var(--ink);
 }
 
 .card {
-  background: #fff;
-  border: 1px solid rgba(10, 10, 10, 0.1);
-  border-radius: 20px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 22px;
   padding: 28px;
   margin-bottom: 20px;
 }
 .cardTitle {
   font-size: 17px;
   font-weight: 700;
-  color: #0a0a0a;
+  color: var(--ink);
   margin: 0 0 16px;
 }
 
@@ -230,7 +230,7 @@
 .clipName {
   font-size: 13.5px;
   font-weight: 600;
-  color: #0a0a0a;
+  color: var(--ink);
 }
 .clipUrl {
   font-family: var(--font-mono), monospace;
@@ -250,7 +250,7 @@
   font-family: var(--font-mono), monospace;
   font-size: 14px;
   font-weight: 600;
-  color: #0a0a0a;
+  color: var(--ink);
 }
 .clipValueAccent {
   font-family: var(--font-mono), monospace;
@@ -278,8 +278,8 @@
 
 /* --- decision feed: the priority section, dark treatment like the Clipper ticker --- */
 .feedCard {
-  background: #0a0a0a;
-  border-radius: 20px;
+  background: var(--ink);
+  border-radius: 22px;
   padding: 28px 28px 12px;
 }
 .feedHead {
