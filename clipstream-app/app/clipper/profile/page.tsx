@@ -17,8 +17,6 @@ import RoleNav from "@/components/shared/RoleNav";
 // Same base URL convention as lib/circleWallets.ts — needed here directly
 // (rather than only inside lib/api.ts) because /auth/x/start is a full-page
 // redirect link, not a fetch call.
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
-
 export default function ClipperProfilePage() {
   const wallet = useClipperWallet();
   const { activeWallet, circleWallet, showDevOverride, setCircleWallet } = wallet;
@@ -166,33 +164,18 @@ export default function ClipperProfilePage() {
               <div className={styles.walletSubtitle}>{activeWallet}</div>
             </header>
 
-            {/* X account link status */}
             <section className={styles.card}>
-              <h2 className={styles.cardTitle}>X account</h2>
-              {profileLoading ? (
-                <div className={styles.skeletonBlock}>Loading…</div>
-              ) : profileError ? (
-                <div className={styles.errorBanner}>{profileError}</div>
-              ) : profile?.x_account.linked ? (
-                <div className={styles.xLinked}>
-                  <span className={styles.xCheck}>✓</span>
-                  <span>
-                    Linked to <strong>@{profile.x_account.x_handle}</strong>
-                  </span>
-                </div>
-              ) : (
-                <div className={styles.xPrompt}>
-                  <p className={styles.xPromptText}>
-                    Link your social account to submit clips — ownership should be verified before any
-                    clip is accepted.
-                  </p>
-                  <a
-                    href={`${API_BASE}/auth/x/start?wallet_address=${encodeURIComponent(activeWallet)}`}
-                    className={`btn ${styles.linkXBtn}`}
-                  >
-                    Link your X account
-                  </a>
-                </div>
+              <h2 className={styles.cardTitle}>Publishing accounts</h2>
+              <p className={styles.socialIntro}>
+                Submit clips from any of these supported platforms. Production onboarding can verify ownership per account before payouts are enabled.
+              </p>
+              <div className={styles.socialGrid}>
+                <div className={styles.socialChip}><span>♪</span><strong>TikTok</strong><small>Supported</small></div>
+                <div className={styles.socialChip}><span>▶</span><strong>YouTube Shorts</strong><small>Supported</small></div>
+                <div className={styles.socialChip}><span>◎</span><strong>Instagram Reels</strong><small>Supported</small></div>
+              </div>
+              {!profileLoading && profile?.x_account.linked && (
+                <div className={styles.demoVerified}>✓ Demo creator identity verified as @{profile.x_account.x_handle}</div>
               )}
             </section>
 
