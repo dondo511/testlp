@@ -151,7 +151,7 @@ export default function OrganizerProfilePage() {
                 <div className={styles.emptyState}>
                   <div className={styles.emptyTitle}>You haven&rsquo;t created any campaigns yet</div>
                   <p className={styles.emptyDesc}>
-                    Once you fund a campaign on-chain and it&rsquo;s indexed, it&rsquo;ll show up here with its rate,
+                    Once you fund a demo campaign pool, it&rsquo;ll show up here with its rate,
                     remaining pool, and status — click through to manage it.
                   </p>
                 </div>
