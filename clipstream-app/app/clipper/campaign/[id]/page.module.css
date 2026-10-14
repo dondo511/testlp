@@ -303,3 +303,144 @@
 .txLink:hover {
   text-decoration: underline;
 }
+
+/* ClipperHub multi-platform submission */
+.submitForm {
+  display: grid;
+  gap: 14px;
+}
+.platformPicker {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.platformOption,
+.platformActive {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-align: left;
+  border-radius: 16px;
+  padding: 13px 14px;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease, transform .15s ease;
+}
+.platformOption {
+  background: #faf7ef;
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+.platformOption:hover {
+  border-color: #aaa38f;
+  transform: translateY(-1px);
+}
+.platformActive {
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  color: #fff;
+}
+.platformIcon {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--lime);
+  color: var(--ink);
+  font-weight: 900;
+}
+.platformOption strong,
+.platformActive strong {
+  display: block;
+  font-size: 12.5px;
+}
+.platformOption small,
+.platformActive small {
+  display: block;
+  margin-top: 2px;
+  font-size: 10.5px;
+  font-weight: 500;
+}
+.platformOption small { color: var(--muted); }
+.platformActive small { color: rgba(255,255,255,.55); }
+.urlRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+.input {
+  min-width: 0;
+  border-radius: 12px;
+  border-color: var(--line);
+  background: #fff;
+}
+.input:focus {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(17,17,15,.06);
+}
+.submitBtn {
+  appearance: none;
+  border: 1px solid var(--lime);
+  background: var(--lime);
+  color: var(--ink);
+  border-radius: 12px;
+  padding: 0 18px;
+  font-weight: 850;
+  cursor: pointer;
+}
+.submitBtn:hover:not(:disabled) { filter: brightness(.97); }
+.submitBtn:disabled { opacity: .55; cursor: default; }
+.submitHint {
+  margin: -2px 0 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.platformBadge {
+  display: inline-flex;
+  margin-right: 7px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: #edf5e7;
+  color: #315a38;
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+.header {
+  background: var(--ink);
+  color: #fff;
+  border-radius: 24px;
+  padding: 26px;
+  margin-bottom: 16px;
+}
+.header .title,
+.header .statValue { color: #fff; }
+.header .titleId,
+.header .statLabel,
+.header .description,
+.header .muted { color: rgba(255,255,255,.52); }
+.header .sourceLink { color: var(--lime); }
+.stat {
+  border: 1px solid #33322d;
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+.card {
+  box-shadow: 0 8px 24px rgba(31,27,18,.035);
+}
+.clipRow {
+  padding: 17px 8px;
+  margin: 0 -8px;
+  border-radius: 12px;
+}
+.clipRow:hover { background: #faf7ef; }
+
+@media (max-width: 720px) {
+  .platformPicker { grid-template-columns: 1fr; }
+  .urlRow { grid-template-columns: 1fr; }
+  .submitBtn { min-height: 46px; }
+}
