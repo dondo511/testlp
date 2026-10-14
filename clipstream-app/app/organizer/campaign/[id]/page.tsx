@@ -146,10 +146,10 @@ export default function OrganizerCampaignPage() {
         <WalletBar {...wallet} role="organizer" />
 
         <div className={styles.scopeBanner}>
-          Topping up below signs a real transaction with a real Circle-managed organizer wallet (PIN approval).
+          This prototype keeps ClipStream's pool top-up flow but uses demo funds instead of a real payment rail.
           Creating a brand-new campaign lives on the Organizer Profile page. Note: <code>topUp()</code> has no
-          on-chain access control by design — anyone can add funds to any campaign — so this form doesn&rsquo;t
-          check &ldquo;is this your campaign&rdquo; before allowing a top-up, same as the contract itself.
+          Campaign funding is simulated here, so this form does not
+          move real money or call a blockchain contract.
         </div>
 
         {campaignLoading ? (
